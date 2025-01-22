@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Formulär och knappar */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button#startGame {
+    padding: 15px 30px;
+    font-size: 1.25rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button#startGame:hover {
+    background-color: #45a049;
+}
+
+/* ------- CANVAS AND CHATT -------- */
+#gameCanvas,
+#chat {
+    width: 600px;
+    height: 400px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+    display: none; /* Default, visas när spelet startas */
+    margin: 20px 0;
+}
+
+/* Chattformulär */
+form#messageForm {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Dold klass */
+.hidden {
+    display: none;
+}
