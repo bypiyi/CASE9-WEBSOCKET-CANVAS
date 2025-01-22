@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQUARE CHASE</title>
+
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+
+    <h1>Welcome to Square Chase!</h1>
+
+    <h3>Move your square, chase the target, and outsmart other players in real time! Score points by reaching the target
+        square first, but stay sharp – everyone else is after it too.
+
+        Chat with other players while you play – celebrate your victories, share some laughs, or throw in an emoji or
+        two. It’s all part of the fun!
+
+        Use the arrow keys to move. Ready to join the chaos? Let’s go!</h3>
+
+    <!-- Användare måste fylla i sitt namn för att starta spelet -->
+    <form action="" id="userForm">
+        <label for="user">Enter your name:</label>
+        <input type="text" id="user" name="user" required>
+        <button type="button" id="startGame">Start Game</button>
+    </form>
+
+    <!-- Gömt tills dess att spelare trycker på Start Game -->
+    <canvas id="gameCanvas" class="hidden"></canvas>
+
+    <!-- Gömt tills dess att spelare trycker på Start Game -->
+    <form action="" class="hidden" id="messageForm">
+        <label for="message">Text:</label>
+        <input type="text" id="message" name="message" required>
+        <input type="submit" value="Send">
+    </form>
+
+    <div id="chat" class="hidden"></div>
+
+    <script src="/frontend/script.js" type="module"></script>
+</body>
+
+</html>
