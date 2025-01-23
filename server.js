@@ -25,7 +25,7 @@ server.on('upgrade', (req, socket, head) => {
     wss.handleUpgrade(req, socket, head, (ws) => {
         console.log(`Client Connected...`);
 
-        
+        // SEND COMMUNICATION FORWARD
         wss.emit('connection', ws, req);
 
     });

@@ -76,10 +76,11 @@ button#startGame:hover {
 }
 
 /* Chattformulär */
-form#messageForm {
+form{
     display: flex;
     gap: 10px;
     align-items: center;
+    margin: 1rem 0;
 }
 
 input[type="submit"] {
