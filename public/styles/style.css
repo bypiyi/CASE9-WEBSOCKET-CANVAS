@@ -62,8 +62,8 @@ body {
 }
 
 .hero-image {
-    max-width: 80%;
-    animation: pulse 1s infinite; /* Lägg animationen här */
+    max-width: 90%;
+    animation: pulse 1.5s infinite; /* Lägg animationen här */
 }
 
 @keyframes pulse {
@@ -85,6 +85,8 @@ body {
     flex-direction: column;
     align-items: center;
 }
+/* ------------ */
+
 
 
 .hidden {
@@ -93,7 +95,7 @@ body {
 
 .introduction {
     padding: 20px;
-    background-color: #e6ddddc7;
+    background-color: #f7f7f7c7;
     border-radius: 30px;
     height: 800px;
     width: 1600px;
@@ -345,10 +347,11 @@ input[type="submit"]:hover {
 
 /* ------- BILDER ----------- */
 #gameImage {
-    max-width: 800px;
-    margin-bottom: 30px;
-    animation: moveSideways 1.5s infinite ease-in-out;
-    /* Rörelse i sidled */
+    max-width: 600px;
+    margin-top: -115px;
+    margin-bottom: -55px;
+    z-index: 1;
+    /* animation: moveSideways 2s infinite ease-in-out; */
 }
 
 @keyframes moveSideways {
@@ -362,5 +365,38 @@ input[type="submit"]:hover {
     50% {
         transform: translateX(15px);
         /* Flytta åt höger */
+    }
+}
+
+
+.floating-image {
+    position: absolute;
+    z-index: 2; /* Gör att bilderna hamnar ovanpå texten */
+    height: auto;
+    /* opacity: 0.8; Gör bilderna lite genomskinliga för snygg effekt */
+}
+
+.image1 {
+    top: 26%; /* Justera placeringen av bild 1 */
+    left: 19%;
+    width: 150px;
+    transform: rotate(-15deg); /* Valfritt: rotera bilden lite för stil */
+    animation: tilt 2s infinite ease-in-out;
+}
+
+.image2 {
+    bottom: 18%; /* Justera placeringen av bild 2 */
+    right: 16%;
+    width: 300px;
+    transform: rotate(10deg); /* Valfritt: rotera bilden lite för stil */
+    animation: tilt 2s infinite ease-in-out;
+}
+
+@keyframes tilt {
+    0%, 100% {
+        transform: rotate(0deg); /* Start- och slutposition */
+    }
+    50% {
+        transform: rotate(10deg); /* Vickar lite åt ena hållet */
     }
 }

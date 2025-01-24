@@ -124,3 +124,15 @@ function renderChatMessage(obj) {
     chat.scrollTop = chat.scrollHeight;
 };
 
+
+// HEROBANNER
+// FUNKTION FÖR ATT BYTA BILD
+// Vänta 4 sekunder innan vi byter bild
+// setTimeout(() => {
+//     const firstImage = document.getElementById('firstImage');
+//     const startImage = document.getElementById('startImage');
+
+//     // Dölj första bilden och visa startbilden
+//     firstImage.style.display = 'none';
+//     startImage.style.display = 'block';
+// }, 4000); // 4000ms = 4 sekunder
