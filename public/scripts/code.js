@@ -1,10 +1,15 @@
-// DOM ELEMENT
+// ----- DOM ELEMENT -----
 const userForm = document.querySelector("#userForm");
 const messageForm = document.querySelector("#messageForm");
 const gameCanvas = document.querySelector("#gameCanvas");
 const chat = document.querySelector("#chat");
 const userInput = document.querySelector("#user");
 const messageInput = document.querySelector("#message");
+
+
+// ----- DEPENDENCIES -----
+
+
 
 // ANVÄND WEBSOCKET
 const websocket = new WebSocket("ws://localhost:8082");
@@ -14,8 +19,8 @@ const websocket = new WebSocket("ws://localhost:8082");
 let objChat = {};
 
 
-// EVENT LISTENERS
-// USER
+// ------ EVENT LISTENERS ------
+// ANVÄNDARE
 userForm.addEventListener("submit", (e) => {
     e.preventDefault();
     console.log("OK", userInput.value);
@@ -43,12 +48,22 @@ messageForm.addEventListener("submit", (e) =>{
     // LÄMNA BLANK INPUT EFTER SÄNDNING
     messageInput.value = "";
 
-    //FUNKTION FÖR UPPDATERING AV CHATT
+    // FUNKTION FÖR UPPDATERING AV CHATT
     renderChatMessage(objChat);
+
+    // SKICKA TILL SERVERN/WEBSOCKET
+    websocket.send(JSON.stringify(objChat));
 });
 
-// USE JSON WHILE COMMUNICATION
-// let msg = {type: "chat", message: "Hello World"};
+
+websocket.addEventListener(`message`, (event) => {
+    console.log("Event", event);
+
+    // EVENT.DATA - DET OBJEKT SOM SKICKATS
+    const obj = JSON.parse(event.data);
+
+    renderChatMessage(obj);
+});
 
 
 
@@ -74,4 +89,4 @@ function renderChatMessage(obj) {
     chat.appendChild(div);
 };
 
-renderChatMessage({ message: "HeejHeej", user: "Alicia"});
+// renderChatMessage({ message: "HeejHeej", user: "Alicia"});

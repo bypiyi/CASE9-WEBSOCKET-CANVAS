@@ -34,17 +34,52 @@ server.on('upgrade', (req, socket, head) => {
 
 // LISTEN TO WEBSOCKET
 wss.on('connection', (ws) => {
-    console.log("New client connection");
+    console.log(`New Client Connection, Number of Clients: ${wss.clients.size}`);
+    // EVENT CLOSE
+    ws.on(`close`, () => {
+        console.log(`Client left. Number of Clients: ${wss.clients.size}` )
+    });
 
     // LISTEN TO EVENT
     ws.on('message', (stream) => {
 
         const obj = JSON.parse(stream);
 
-        // MESSAGE RECIEVED
-        console.log(obj.message);
-    })
+        // MEDDELANDET SOM MOTTOGS
+        console.log(`${obj.datetime}: ${obj.user} typing ${obj.message}`);
+
+        // // SKICKA VIDARE MEDDELANDE FRÅN SERVERN TILL ANSLUTNA KLIENTER
+        // wss.clients.forEach(client => {
+        //     if (client !== ws) {
+        //         client.send(JSON.stringify(obj));
+        //     }
+        // });
+        broadcastExclude(wss, ws, obj);
+    });
 });
+
+
+
+// ---- FUNKTIONER -----
+//SKICKA TRAFIK TILL ALLA/VISSA
+
+function broadcast(wss, obj) {
+    wss.clients.forEach(client => {
+        client.send(JSON.stringify(obj));
+    });
+}
+
+function broadcastExclude(wss, ws, obj) {
+    wss.clients.forEach(client => {
+        if (client !== ws) {
+            client.send(JSON.stringify(obj));
+        }
+    });
+}
+
+
+
+//  ---------
 
 
 server.listen(PORT, () => {
