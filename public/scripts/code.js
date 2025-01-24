@@ -1,4 +1,7 @@
 // ----- DOM ELEMENT -----
+const heroBanner = document.querySelector("#heroBanner");
+const mainContent = document.querySelector("#mainContent");
+
 const userForm = document.querySelector("#userForm");
 const messageForm = document.querySelector("#messageForm");
 const gameCanvas = document.querySelector("#gameCanvas");
@@ -20,6 +23,19 @@ let objChat = {};
 
 
 // ------ EVENT LISTENERS ------
+
+// HERO-BANNER
+heroBanner.addEventListener("click", () => {
+    // Dölj hero-bannern
+    heroBanner.style.display = "none";
+
+    // Visa innehållet
+    mainContent.classList.remove("hidden");
+
+    // Fokus på användarens inputfält
+    userInput.focus();
+});
+
 // ANVÄNDARE
 userForm.addEventListener("submit", (e) => {
     e.preventDefault();

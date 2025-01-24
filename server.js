@@ -10,58 +10,51 @@ const PORT = 8082;
 // HANTERA FRONTEND SOM STATISK MED EXPRESS
 app.use(express.static("public"));
 
-
 // HTTP
 const server = http.createServer(app);
 
-// CREATE WEBSOCKET SERVER
+// SKAPA WEBSOCKET-SERVER
 const wss = new WebSocketServer({ noServer: true });
 
-// HANDLE WEBSOCKET COMMUNICATION
+// HANTERA WEBSOCKET-KOMMUNIKATION
 server.on('upgrade', (req, socket, head) => {
 
-    console.log(`Client Upgrade ...`);
+    console.log(`Klient uppgraderar ...`);
 
     wss.handleUpgrade(req, socket, head, (ws) => {
-        console.log(`Client Connected...`);
+        console.log(`Klient ansluten...`);
 
-        // SEND COMMUNICATION FORWARD
+        // SKICKA KOMMUNIKATION VIDARE
         wss.emit('connection', ws, req);
 
     });
 
 });
 
-// LISTEN TO WEBSOCKET
+// LYSSNA PÅ WEBSOCKET
 wss.on('connection', (ws) => {
-    console.log(`New Client Connection, Number of Clients: ${wss.clients.size}`);
-    // EVENT CLOSE
+    console.log(`Ny klientanslutning, antal klienter: ${wss.clients.size}`);
+    
+    // EVENT FÖR STÄNGNING
     ws.on(`close`, () => {
-        console.log(`Client left. Number of Clients: ${wss.clients.size}` )
+        console.log(`Klient lämnade. Antal klienter: ${wss.clients.size}` );
     });
 
-    // LISTEN TO EVENT
+    // LYSSNA PÅ EVENT
     ws.on('message', (stream) => {
 
         const obj = JSON.parse(stream);
 
         // MEDDELANDET SOM MOTTOGS
-        console.log(`${obj.datetime}: ${obj.user} typing ${obj.message}`);
+        console.log(`${obj.datetime}: ${obj.user} skrev ${obj.message}`);
 
-        // // SKICKA VIDARE MEDDELANDE FRÅN SERVERN TILL ANSLUTNA KLIENTER
-        // wss.clients.forEach(client => {
-        //     if (client !== ws) {
-        //         client.send(JSON.stringify(obj));
-        //     }
-        // });
+        // SKICKA VIDARE MEDDELANDE FRÅN SERVERN TILL ANSLUTNA KLIENTER
         broadcastExclude(wss, ws, obj);
     });
 });
 
-
-
 // ---- FUNKTIONER -----
-//SKICKA TRAFIK TILL ALLA/VISSA
+// SKICKA TRAFIK TILL ALLA/VISSA
 
 function broadcast(wss, obj) {
     wss.clients.forEach(client => {
@@ -77,11 +70,8 @@ function broadcastExclude(wss, ws, obj) {
     });
 }
 
-
-
-//  ---------
-
+// ---------
 
 server.listen(PORT, () => {
-    console.log(`server listening on port ${PORT}`);
+    console.log(`Servern lyssnar på port ${PORT}`);
 });
