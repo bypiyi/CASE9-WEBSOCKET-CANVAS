@@ -1,3 +1,6 @@
+/* TYPSNITT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
     margin: 0;
     padding: 0;
@@ -9,14 +12,18 @@ body {
     justify-content: center;
     min-height: 100vh;
     color: #333;
+    background-image: url('../images/background2.png');
+    /* Länk till din bild */
 }
 
 
 /* ---- HERO BANNER ---- */
 .hero-banner {
     width: 100%;
-    height: 100vh; /* Täck hela viewporten */
-    background-image: url('../images/background2.png'); /* Länk till din bild */
+    height: 100vh;
+    /* Täck hela viewporten */
+    background-image: url('../images/background2.png');
+    /* Länk till din bild */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -42,27 +49,86 @@ body {
     display: none;
 }
 
-/* #mainContent {
+.introduction {
     padding: 20px;
-    background-color: #f9f9f9;
-    height: 100vh;
+    background-color: #f9f9f9c7;
+    height: 800px;
+    width: 1600px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-} */
+}
 
 /* --------- */
 
 
-/* --- CHAT ---- */
+
+/* ------- CHAT ------- */
 div#chat {
-    min-height: 1rem;
-    background-color: lightgray;
-    margin: 2rem 0;
-    padding: 1rem;
-    border: 1px dotted #eee;
+    width: 300px;
+    height: 340px;
+    max-height: 400px;
+    /* SCROLLFUNKTION */
+    overflow-y: auto;
+    /* -- */
+    border: 1px solid #fcb3fc;
+    padding: 10px;
+    background-color: #fab7ef;
+    border-radius: 8px;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #4d67ff;
+    word-wrap: break-word;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 
+    0 1px 3px rgba(0, 0, 0, 0.06);
 }
+
+/* SCROLLFUNKTION DESIGN*/
+#chat::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chat::-webkit-scrollbar-thumb {
+    background-color: #ff58c7;
+    border-radius: 4px;
+}
+
+#chat::-webkit-scrollbar-thumb:hover {
+    background-color: #ffacda;
+}
+
+/* DESIGN TEXT */
+#chat p {
+    margin: 0.3rem 0; 
+    color: #333; 
+}
+
+#chat span {
+    font-weight: bold;
+    font-size: 10px;
+    color: #ff58c7;
+}
+
+
+/* DESIGN CHATTBUBBLOR */
+#chat div {
+    background-color: #ffe4f7; 
+    padding: 6px 10px; 
+    margin-bottom: 10px; 
+    border-radius: 12px; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+#chat div span {
+    display: block;
+    margin-bottom: 3px;
+}
+
+/* -------------------- */
 
 
 
@@ -106,7 +172,7 @@ input[type="text"] {
 button#startGame {
     padding: 15px 30px;
     font-size: 1.25rem;
-    background-color: #4CAF50;
+    background-color: #f386db;
     color: white;
     border: none;
     border-radius: 5px;
@@ -115,22 +181,23 @@ button#startGame {
 }
 
 button#startGame:hover {
-    background-color: #45a049;
+    background-color: #fcadeb;
 }
 
 /* ------- CANVAS AND CHATT -------- */
-#gameCanvas{
+#gameCanvas {
     width: 600px;
     height: 400px;
     border: 2px solid #ccc;
     border-radius: 10px;
     background-color: white;
-    display: none; /* Default, visas när spelet startas */
+    display: none;
+    /* Default, visas när spelet startas */
     margin: 20px 0;
 }
 
 /* Chattformulär */
-form{
+form {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -151,4 +218,3 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #0056b3;
 }
-

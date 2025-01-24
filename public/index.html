@@ -11,44 +11,57 @@
 
 <body>
 
-     <!-- Hero-banner -->
-     <div id="heroBanner" class="hero-banner">
-        <a href="#" id="heroLink"> <!-- Gör hela bannern till en klickbar länk -->
+    <!-- KLICKBAR HERO-BANNER -->
+    <div id="heroBanner" class="hero-banner">
+        <a href="#" id="heroLink">
         </a>
     </div>
-    
+
 
     <div id="mainContent" class="hidden">
-        <h1>Welcome to Square Chase!</h1>
-        <h3>Move your square, chase the target, and outsmart other players in real time! Score points by reaching the
-            target
-            square first, but stay sharp – everyone else is after it too.
+        <div class="introduction">
+            <h1 id="gameTitle">Welcome to Square Chase!</h1>
+            <h3 id="gameDescription">Move your square, chase the target, and outsmart other players in real time! Score
+                points by reaching
+                the
+                target
+                square first, but stay sharp – everyone else is after it too.
 
-            Chat with other players while you play – celebrate your victories, share some laughs, or throw in an emoji
-            or
-            two. It’s all part of the fun!
+                Chat with other players while you play – celebrate your victories, share some laughs, or throw in an
+                emoji
+                or
+                two. It’s all part of the fun!
 
-            Use the arrow keys to move. Ready to join the chaos? Let’s go!</h3>
+                Use the arrow keys to move. Ready to join the chaos? Let’s go!</h3>
 
-        <!-- Användare måste fylla i sitt namn för att starta spelet -->
-        <form action="" id="userForm">
-            <label for="user">Enter your name:</label>
-            <input type="text" id="user" name="user" required>
-            <button type="submit" value="starta" id="startGame">Start Game</button>
-        </form>
-
-        <!-- Gömt tills dess att spelare trycker på Start Game -->
-        <canvas id="gameCanvas" class="hidden"></canvas>
-
-        <!-- Gömt tills dess att spelare trycker på Start Game -->
-        <form action="" class="hidden" id="messageForm">
-            <label for="message">Text:</label>
-            <input type="text" id="message" name="message" required>
-            <input type="submit" value="Send">
-        </form>
+            <!-- ANVÄNDARE MÅSTE FYLLA I NAMN FÖR ATT STARTA SPEL -->
+            <form action="" id="userForm">
+                <label for="user">Enter your name:</label>
+                <input type="text" id="user" name="user" required>
+                <button type="submit" value="starta" id="startGame">Start Game</button>
+            </form>
 
 
-        <div id="chat" class="hidden"></div>
+            <!-- SPELET STARTAR -->
+            <div id="welcomeText" class="hidden">
+                <h2>Welcome, <span id="userName"></span>!</h2>
+                <p>Get ready to move your square, chase the target, and outsmart other players in real time. Score
+                    points by reaching the target first and stay sharp — everyone else is after it too!</p>
+            </div>
+
+            <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
+            <canvas id="gameCanvas" class="hidden"></canvas>
+
+            <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
+            <form action="" class="hidden" id="messageForm">
+                <label for="message">CHAT WITH YOUR OPPONENTS</label>
+                <input type="text" id="message" name="message" required>
+                <input type="submit" value="Send">
+            </form>
+
+
+            <div id="chat" class="hidden"></div>
+        </div>
     </div>
 
 

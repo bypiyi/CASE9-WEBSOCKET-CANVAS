@@ -1,4 +1,4 @@
-// ----- DOM ELEMENT -----
+// ----- DOM ELEMENT ----- 
 const heroBanner = document.querySelector("#heroBanner");
 const mainContent = document.querySelector("#mainContent");
 
@@ -9,17 +9,21 @@ const chat = document.querySelector("#chat");
 const userInput = document.querySelector("#user");
 const messageInput = document.querySelector("#message");
 
+const gameTitle = document.querySelector("#gameTitle");
+const gameDescription = document.querySelector("#gameDescription");
+const welcomeText = document.querySelector("#welcomeText");
+const userNameElement = document.querySelector("#userName");
+
+// * ------------------------ *
+
 
 // ----- DEPENDENCIES -----
-
-
-
-// ANVÄND WEBSOCKET
 const websocket = new WebSocket("ws://localhost:8082");
 
 
 // DEKLARERA OBJEKT - CHATTMEDDELANDE
 let objChat = {};
+
 
 
 // ------ EVENT LISTENERS ------
@@ -44,20 +48,29 @@ userForm.addEventListener("submit", (e) => {
     // NOT POSSIBLE TO CHANGE USERNAME
     userInput.setAttribute("disabled", true);
 
-    // OPEN UP CANVA, REMOVE HIDDEN
-    gameCanvas.classList = "";
+    // DÖLJ TITEL OCH BESKRIVNING
+    gameTitle.style.display = "none";
+    gameDescription.style.display = "none";
 
-    // OPEN UP CHAT, REMOVE HIDDEN
-    messageForm.classList = "";
-    chat.classList = "";
+    // DÖLJ FORMULÄR FÖR ANVÄNDARE
+    userForm.style.display = "none";
+
+    // ÖPPNA CANVAS, TA BORT HIDDEN
+    gameCanvas.classList.remove("hidden");
+
+    // ÖPPNA CHAT, TA BORT HIDDEN
+    messageForm.classList.remove("hidden");
+    chat.classList.remove("hidden");
+
+    // VÄLJ VÄLKOMSTTEXT OCH VISA DEN
+    userNameElement.textContent = userInput.value;
+    welcomeText.classList.remove("hidden");
 
     // INPUTFIELD ACTIVE FOR MESSAGES
-    // messageInput.focus();
     objChat.user = userInput.value;
-
 });
 
-messageForm.addEventListener("submit", (e) =>{
+messageForm.addEventListener("submit", (e) => {
     e.preventDefault();
     objChat.message = messageInput.value;
 
@@ -71,7 +84,6 @@ messageForm.addEventListener("submit", (e) =>{
     websocket.send(JSON.stringify(objChat));
 });
 
-
 websocket.addEventListener(`message`, (event) => {
     console.log("Event", event);
 
@@ -81,17 +93,17 @@ websocket.addEventListener(`message`, (event) => {
     renderChatMessage(obj);
 });
 
+// * ------------* 
 
 
-// ---- FUNKTIONER -----
+
+// ---- FUNKTIONER ----
 
 /**
- *
  *
  * @param {object} obj
  */
 function renderChatMessage(obj) {
-    // exempel objekt: {message: "Lorem ipsum", user""};
     const div = document.createElement("div");
     const p = document.createElement("p");
     p.textContent = obj.message;
@@ -103,6 +115,8 @@ function renderChatMessage(obj) {
     div.appendChild(span);
 
     chat.appendChild(div);
+
+    // AUTOSCROLL CHAT
+    chat.scrollTop = chat.scrollHeight;
 };
 
-// renderChatMessage({ message: "HeejHeej", user: "Alicia"});
