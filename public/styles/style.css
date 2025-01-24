@@ -8,9 +8,52 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f0f4f8;
     color: #333;
 }
+
+
+/* ---- HERO BANNER ---- */
+.hero-banner {
+    width: 100%;
+    height: 100vh; /* Täck hela viewporten */
+    background-image: url('../images/background2.png'); /* Länk till din bild */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.hero-banner a {
+    text-decoration: none;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.hidden {
+    display: none;
+}
+
+/* #mainContent {
+    padding: 20px;
+    background-color: #f9f9f9;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+} */
+
+/* --------- */
+
 
 /* --- CHAT ---- */
 div#chat {
@@ -109,7 +152,3 @@ input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Dold klass */
-.hidden {
-    display: none;
-}
