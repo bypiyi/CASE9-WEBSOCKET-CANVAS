@@ -1,5 +1,8 @@
 /* TYPSNITT */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
+
 
 body {
     margin: 0;
@@ -98,7 +101,7 @@ body {
     background-color: #f7f7f7c7;
     border-radius: 30px;
     height: 800px;
-    width: 1600px;
+    width: 1500px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -220,8 +223,9 @@ h3 {
     max-width: 900px;
     text-align: center;
     line-height: 1.6;
-    font-family: "Poppins", serif;
+    font-family: "Silkscreen", serif;
     font-weight: 600;
+    font-style: normal;
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgb(255, 255, 255);
 }
@@ -347,9 +351,9 @@ input[type="submit"]:hover {
 
 /* ------- BILDER ----------- */
 #gameImage {
-    max-width: 600px;
-    margin-top: -115px;
-    margin-bottom: -55px;
+    max-width: 550px;
+    margin-top: -90px;
+    margin-bottom: -45px;
     z-index: 1;
     /* animation: moveSideways 2s infinite ease-in-out; */
 }
