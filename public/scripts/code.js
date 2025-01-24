@@ -11,6 +11,8 @@ const messageInput = document.querySelector("#message");
 
 const gameTitle = document.querySelector("#gameTitle");
 const gameDescription = document.querySelector("#gameDescription");
+const gameDescriptionBox = document.querySelector("#gameDescriptionBox");
+const gameImage = document.querySelector("#gameImage");
 const welcomeText = document.querySelector("#welcomeText");
 const userNameElement = document.querySelector("#userName");
 
@@ -49,8 +51,10 @@ userForm.addEventListener("submit", (e) => {
     userInput.setAttribute("disabled", true);
 
     // DÖLJ TITEL OCH BESKRIVNING
-    gameTitle.style.display = "none";
+    // gameTitle.style.display = "none";
     gameDescription.style.display = "none";
+    gameImage.style.display = "none";
+    gameDescriptionBox.style.display = "none";
 
     // DÖLJ FORMULÄR FÖR ANVÄNDARE
     userForm.style.display = "none";

@@ -20,24 +20,28 @@
 
     <div id="mainContent" class="hidden">
         <div class="introduction">
-            <h1 id="gameTitle">Welcome to Square Chase!</h1>
-            <h3 id="gameDescription">Move your square, chase the target, and outsmart other players in real time! Score
-                points by reaching
-                the
-                target
-                square first, but stay sharp – everyone else is after it too.
+            <img src="./images/logo.png" alt="Game Image" id="gameImage" />
+            <div id="gameDescriptionBox">
+                <h3 id="gameDescription">Move your square, chase the target, and outsmart other players in real time!
+                    Score
+                    points by reaching
+                    the
+                    target
+                    square first, but stay sharp – everyone else is after it too.
 
-                Chat with other players while you play – celebrate your victories, share some laughs, or throw in an
-                emoji
-                or
-                two. It’s all part of the fun!
+                    Chat with other players while you play – celebrate your victories, share some laughs, or throw in an
+                    emoji
+                    or
+                    two. It’s all part of the fun!
 
-                Use the arrow keys to move. Ready to join the chaos? Let’s go!</h3>
+                    Use the arrow keys to move. 
+                    <br><br>Ready to join the chaos? Let’s go!</h3>
+            </div>
 
             <!-- ANVÄNDARE MÅSTE FYLLA I NAMN FÖR ATT STARTA SPEL -->
             <form action="" id="userForm">
-                <label for="user">Enter your name:</label>
-                <input type="text" id="user" name="user" required>
+                <label for="user">ENTER YOUR NAME TO PLAY</label>
+                <input type="text" id="user" name="user" required placeholder="NAME..">
                 <button type="submit" value="starta" id="startGame">Start Game</button>
             </form>
 
@@ -53,11 +57,11 @@
             <canvas id="gameCanvas" class="hidden">hejhej</canvas>
 
             <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
-                <form action="" class="hidden chatbox" id="messageForm">
-                    <label for="message">CHAT WITH YOUR OPPONENTS</label>
-                    <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
-                    <input type="submit" value="SEND">
-                </form>
+            <form action="" class="hidden chatbox" id="messageForm">
+                <label for="message">CHAT WITH YOUR OPPONENTS</label>
+                <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
+                <input type="submit" value="SEND">
+            </form>
 
             <div id="chat" class="hidden">
                 <p>LET'S GET STARTED</p>
