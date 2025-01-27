@@ -4,7 +4,7 @@ const mainContent = document.querySelector("#mainContent");
 
 const userForm = document.querySelector("#userForm");
 const messageForm = document.querySelector("#messageForm");
-const gameCanvas = document.querySelector("#gameCanvas");
+// const gameCanvas = document.querySelector("#gameCanvas");
 const chat = document.querySelector("#chat");
 const userInput = document.querySelector("#user");
 const messageInput = document.querySelector("#message");
@@ -25,6 +25,9 @@ const websocket = new WebSocket("ws://localhost:8082");
 
 // DEKLARERA OBJEKT - CHATTMEDDELANDE
 let objChat = {};
+
+// // CANVAS
+// const ctx = gameCanvas.getContext("2d");
 
 
 

@@ -324,7 +324,7 @@ button#startGame:hover {
 /* ------- CANVAS AND CHATT -------- */
 .game {
     display: flex;
-    gap: 60px;
+    gap: 45px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -347,6 +347,16 @@ button#startGame:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.13),
         0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    color: black;
+}
+
+/* ----- */
 
 
 /* Chattformulär */
