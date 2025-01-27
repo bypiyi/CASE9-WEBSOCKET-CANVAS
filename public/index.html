@@ -54,7 +54,7 @@
                     the
                     target
                     square first, but stay sharp – everyone else is after it too.
-
+                    <br>
                     Chat with other players while you play and celebrate your victories.
                     <br><br>Ready to join the chaos? Let’s go!
                 </h3>
@@ -77,18 +77,23 @@
                     points by reaching the target first and stay sharp — everyone else is after it too!</p>
             </div>
 
-            <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
-            <canvas id="gameCanvas" class="hidden">hejhej</canvas>
 
-            <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
-            <form action="" class="hidden chatbox" id="messageForm">
-                <label for="message">CHAT WITH YOUR OPPONENTS</label>
-                <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
-                <input type="submit" value="SEND">
-            </form>
+            <div class="game">
+                <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
+                <canvas id="gameCanvas" class="hidden"></canvas>
 
-            <div id="chat" class="hidden">
-                <!-- <p> - LET'S GET STARTED</p> -->
+                <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
+                <div class="boxchat">
+                    <form action="" class="hidden chatbox" id="messageForm">
+                        <label for="message">CHAT WITH YOUR OPPONENTS</label>
+                        <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
+                        <input type="submit" value="SEND">
+                    </form>
+
+                    <div id="chat" class="hidden">
+                        <!-- <p> - LET'S GET STARTED</p> -->
+                    </div>
+                </div>
             </div>
 
 

@@ -77,6 +77,7 @@ userForm.addEventListener("submit", (e) => {
 messageForm.addEventListener("submit", (e) => {
     e.preventDefault();
     objChat.message = messageInput.value;
+    objChat.datetime = new Date().toLocaleTimeString();
 
     // LÄMNA BLANK INPUT EFTER SÄNDNING
     messageInput.value = "";
@@ -113,7 +114,7 @@ function renderChatMessage(obj) {
     p.textContent = obj.message;
 
     const span = document.createElement("span");
-    span.textContent = obj.user;
+    span.textContent = obj.user + " - " + obj.datetime;;
 
     div.appendChild(p);
     div.appendChild(span);
@@ -124,15 +125,3 @@ function renderChatMessage(obj) {
     chat.scrollTop = chat.scrollHeight;
 };
 
-
-// HEROBANNER
-// FUNKTION FÖR ATT BYTA BILD
-// Vänta 4 sekunder innan vi byter bild
-// setTimeout(() => {
-//     const firstImage = document.getElementById('firstImage');
-//     const startImage = document.getElementById('startImage');
-
-//     // Dölj första bilden och visa startbilden
-//     firstImage.style.display = 'none';
-//     startImage.style.display = 'block';
-// }, 4000); // 4000ms = 4 sekunder
