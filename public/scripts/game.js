@@ -21,8 +21,8 @@ const GRAVITY_FORCE = 9.82;
 let targetX = 400;
 let targetY = 400;
 const targetSize = 50;
-let targetSpeedX = 7; 
-let targetSpeedY = 7; 
+let targetSpeedX = 8; 
+let targetSpeedY = 8; 
 
 // VILL ATT SPELAREN SKA VARA EN BILD
 const playerImage = new Image();
