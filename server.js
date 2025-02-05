@@ -21,23 +21,28 @@ server.on('upgrade', (req, socket, head) => {
 
     console.log(`Klient uppgraderar ...`);
 
+    // SKAPAR UNIKT KLIENT-ID
     wss.handleUpgrade(req, socket, head, (ws) => {
-        console.log(`Klient ansluten...`);
+        const clientId = nanoid(); 
+
+        console.log(`Klient ansluten med ID: ${clientId}`);
+
+        // SKICKAR TILLBAKA KLIENTENS UNIKA ID TILL KLIENTEN
+        ws.send(JSON.stringify({ type: 'clientId', clientId }));
 
         // SKICKA KOMMUNIKATION VIDARE
-        wss.emit('connection', ws, req);
-
+        wss.emit('connection', ws, req, clientId);
     });
 
 });
 
 // LYSSNA PÅ WEBSOCKET
-wss.on('connection', (ws) => {
-    console.log(`Ny klientanslutning, antal klienter: ${wss.clients.size}`);
+wss.on('connection', (ws, req, clientId) => {
+    console.log(`Ny klientanslutning med ID: ${clientId}, antal klienter: ${wss.clients.size}`);
     
     // EVENT FÖR STÄNGNING
     ws.on(`close`, () => {
-        console.log(`Klient lämnade. Antal klienter: ${wss.clients.size}` );
+        console.log(`Klient med ID: ${clientId} lämnade. Antal klienter: ${wss.clients.size}` );
     });
 
     // LYSSNA PÅ EVENT
@@ -45,8 +50,11 @@ wss.on('connection', (ws) => {
 
         const obj = JSON.parse(stream);
 
-        // MEDDELANDET SOM MOTTOGS
-        console.log(`${obj.datetime}: ${obj.user} skrev ${obj.message}`);
+        // LÄGGER TILL KLIENTES ID I MEDDELANDET
+        obj.clientId = clientId;
+
+        // MEDDELANDET SOM MOTTAGITS
+        console.log(`${obj.datetime}: ${obj.user} skrev ${obj.message} (Klient ID: ${clientId})`);
 
         // SKICKA VIDARE MEDDELANDE FRÅN SERVERN TILL ANSLUTNA KLIENTER
         broadcastExclude(wss, ws, obj);
@@ -55,7 +63,6 @@ wss.on('connection', (ws) => {
 
 // ---- FUNKTIONER -----
 // SKICKA TRAFIK TILL ALLA/VISSA
-
 function broadcast(wss, obj) {
     wss.clients.forEach(client => {
         client.send(JSON.stringify(obj));
