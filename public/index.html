@@ -41,8 +41,8 @@
         <div class="introduction">
             <img src="./images/logo3.png" alt="Game Image" id="gameImage" />
             <div id="gameDescriptionBox">
-                <h3 id="gameDescription">Move your target, chase the square, and outsmart other players in real time!
-                    Score points by reaching the targetsquare first, but stay sharp – everyone else is after it too.
+                <h3 id="gameDescription">Move your player, chase the square, and outsmart your opponents in real time!
+                    Score points by reaching the target square first, but stay sharp – everyone else is after it too.
                     <br>
                     Chat with other players while you play and celebrate your victories.
                     <br><br>Ready to join the chaos? Let’s go!
@@ -62,10 +62,10 @@
 
 
             <!-- SPELET STARTAR -->
-            <div id="welcomeText" class="hidden">
+            <div id="welcomeText" class="hidden textWelcome">
                 <h2>Welcome, <span id="userName"></span>!</h2>
-                <p>Get ready to move your square, chase the target, and outsmart other players in real time. Score
-                    points by reaching the target first and stay sharp — everyone else is after it too!</p>
+                <!-- <p>Get ready to move your square, chase the target, and outsmart other players in real time.
+                    Score points by reaching the target first and stay sharp — everyone else is after it too!</p> -->
             </div>
 
 
@@ -73,12 +73,13 @@
             <div class="game">
                 <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
                 <canvas id="gameCanvas" class="hidden"></canvas>
-                <div id="score">Poäng: 0</div>
+                
                 <script src="scripts/game.js"></script>
 
 
                 <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
                 <div class="boxchat">
+                    <ul id="scoreList"></ul>
                     <form action="" class="hidden chatbox" id="messageForm">
                         <label for="message">CHAT WITH YOUR OPPONENTS</label>
                         <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
@@ -96,8 +97,8 @@
         </div>
     </div>
 
-
-    <script src="scripts/code.js"></script>
+    
+    <script src="./scripts/code.js"></script>
 
 </body>
 
