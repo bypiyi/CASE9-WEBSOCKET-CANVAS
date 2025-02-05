@@ -1,4 +1,4 @@
-# SQUARE CHASE
+# SQUARE CHASE - Jaga fyrkanten!
 
 Installera projektet genom att köra följande kommado i terminalen:
 
@@ -19,13 +19,15 @@ node server.js
 ```
 ---
 
-Öppna därefter en webbläsare och ange den url som gäller, exempelvis:
+Öppna därefter en webbläsare och ange följande:
 
 `http://localhost:8082`
 
-Eftersom det är en socket applikation bör flera webbläsare ansluta.
 
 ---
-### Så gör du
+### Så här spelar du!
 
-Skriv in ett namn och klicka på START GAME - därefter ska spelet automatiskt starta. Du rör din spelare genom W A S D.
+Skriv in ett namn och klicka på START GAME - därefter ska spelet automatiskt starta. Du vinner poäng genom att klicka på målet som
+är en fyrkant i rörelse!
+
+Chatta med dina motståndare kan du också göra.

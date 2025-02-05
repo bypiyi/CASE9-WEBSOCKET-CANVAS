@@ -58,14 +58,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* Wrappern håller allt centrerat */
     z-index: 1;
 }
 
 .hero-image {
     max-width: 90%;
     animation: pulse 1.5s infinite;
-    /* Lägg animationen här */
 }
 
 @keyframes pulse {
@@ -73,12 +71,10 @@ body {
     0%,
     100% {
         transform: scale(1);
-        /* Bara skala, ingen påverkan på position */
     }
 
     50% {
         transform: scale(1.1);
-        /* Pulsera utan att röra position */
     }
 }
 
