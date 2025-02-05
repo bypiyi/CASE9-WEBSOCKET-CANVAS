@@ -1,4 +1,4 @@
-// ----- DOM ELEMENTS ----- 
+// ----- DOM ELEMENT ----- 
 const heroBanner = document.querySelector("#heroBanner");
 const mainContent = document.querySelector("#mainContent");
 
@@ -15,140 +15,75 @@ const gameImage = document.querySelector("#gameImage");
 const welcomeText = document.querySelector("#welcomeText");
 const userNameElement = document.querySelector("#userName");
 
+// * ------------------------ *
+
+
+const websocket = new WebSocket("ws://localhost:8082");
+
+// DEKLARERA OBJEKT - CHATTMEDDELANDE
+let objChat = {};
+
+// CANVAS
 const gameCanvas = document.querySelector("#gameCanvas");
 const context = gameCanvas.getContext("2d");
 
-// ----- DEPENDENCIES ----- 
-const websocket = new WebSocket("ws://localhost:8082");
-
-// ----- VARIABLES ----- 
-let objChat = {};
-let clientId = null;
-let players = [];
-let myPlayer = null; // Den aktuella spelarens data
-
-// ----- CANVAS SETTINGS ----- 
+// SÄTTER BREDD OCH HÖJD PÅ CANVAS
 const CANVAS_WIDTH = 900;
 const CANVAS_HEIGHT = 650;
 gameCanvas.width = CANVAS_WIDTH;
 gameCanvas.height = CANVAS_HEIGHT;
 
-// TARGET PROPERTIES
+// MÅLETS EGENSKAPER
 let targetX = 400;
 let targetY = 400;
-const targetSize = 50;
+const targetSize = 80;
 let targetSpeedX = 8;
 let targetSpeedY = 8;
 
-// IMAGES
+// POÄNGVARIABEL
+let score = 0;
+
+// BILDER
 const backgroundImage = new Image();
 backgroundImage.src = './images/canvas.png';
-
-const playerImage = new Image();
-playerImage.src = './images/arcade1.png';
 
 const targetImage = new Image();
 targetImage.src = './images/target.png';
 
-// KEY EVENTS 
-let keys = {};
-window.addEventListener('keydown', (e) => {
-  keys[e.key.toLowerCase()] = true;
-});
-window.addEventListener('keyup', (e) => {
-  keys[e.key.toLowerCase()] = false;
-});
+// KONTROLLERA OM MÅLET ÄR KLICKAT
+gameCanvas.addEventListener("click", (e) => {
+    const mouseX = e.offsetX;
+    const mouseY = e.offsetY;
 
-// ----- EVENT LISTENERS ----- 
+    // KONTROLLERA OM SPELAREN HAR KLICKAT PÅ MÅLET
+    if (
+        mouseX > targetX &&
+        mouseX < targetX + targetSize &&
+        mouseY > targetY &&
+        mouseY < targetY + targetSize
+    ) {
+        // NY POSITION FÖR MÅLET
+        targetX = Math.random() * (CANVAS_WIDTH - targetSize);
+        targetY = Math.random() * (CANVAS_HEIGHT - targetSize);
 
-// HERO-BANNER 
-heroBanner.addEventListener("click", () => {
-    heroBanner.style.display = "none";
-    mainContent.classList.remove("hidden");
-    userInput.focus();
-});
+        // ÖKA POÄNG OCH SKICKA TILL CHAT
+        score += 1;
+        objChat.message = `${objChat.user} scored! Total: ${score} points`;
+        objChat.datetime = new Date().toLocaleTimeString();
+        renderChatMessage(objChat);
 
-// USER FORM
-userForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    userInput.setAttribute("disabled", true);
-
-    gameDescription.style.display = "none";
-    gameImage.style.display = "none";
-    gameDescriptionBox.style.display = "none";
-
-    userForm.style.display = "none";
-    gameCanvas.classList.remove("hidden");
-    messageForm.classList.remove("hidden");
-    chat.classList.remove("hidden");
-
-    userNameElement.textContent = userInput.value;
-    welcomeText.classList.remove("hidden");
-
-    objChat.user = userInput.value;
-});
-
-// MESSAGE FORM
-messageForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    objChat.message = messageInput.value;
-    objChat.datetime = new Date().toLocaleTimeString();
-
-    messageInput.value = "";
-    renderChatMessage(objChat);
-
-    websocket.send(JSON.stringify(objChat));
-});
-
-// ----- WEBSOCKET HANDLING ----- 
-websocket.addEventListener('message', (event) => {
-    const obj = JSON.parse(event.data);
-
-    // Hantera klientens ID
-    if (obj.type === 'clientId') {
-        clientId = obj.id;
-
-        // Skicka information om den nya spelaren till servern
-        const initialPlayer = {
-            id: clientId,
-            x: Math.random() * (CANVAS_WIDTH - 50),
-            y: Math.random() * (CANVAS_HEIGHT - 50),
-            width: 50,
-            height: 50,
-            score: 0
-        };
-        websocket.send(JSON.stringify({ type: 'newPlayer', player: initialPlayer }));
-    }
-
-    // Uppdatera alla spelares positioner
-    if (obj.type === 'playersUpdate') {
-        players = obj.players;
-    }
-
-    // Om meddelandet inte är relaterat till spelare, rendera chattmeddelandet
-    if (obj.type !== 'clientId' && obj.type !== 'playersUpdate') {
-        renderChatMessage(obj);
+        // Skicka poäng till servern
+        websocket.send(JSON.stringify(objChat));
     }
 });
 
-// ----- GAME LOGIC ----- 
 
-// MOVE PLAYER WITH WASD KEYS ONLY
-function movePlayer(player) {
-    if (keys['w']) player.y -= 5;
-    if (keys['s']) player.y += 5;
-    if (keys['a']) player.x -= 5;
-    if (keys['d']) player.x += 5;
-
-    // Skicka uppdatering till servern om spelarens rörelse
-    websocket.send(JSON.stringify({ type: 'updatePlayerPosition', player: player }));
-}
-
-// MOVE TARGET
+// FLYTTA MÅLET
 function moveTarget() {
     targetX += targetSpeedX;
     targetY += targetSpeedY;
 
+    // OM MÅLET RÖR KANTEN, BYT RIKTNING
     if (targetX <= 0 || targetX + targetSize >= CANVAS_WIDTH) {
         targetSpeedX = -targetSpeedX;
     }
@@ -157,83 +92,138 @@ function moveTarget() {
     }
 }
 
-// CHECK COLLISION BETWEEN PLAYER AND TARGET
-function checkCollision(player) {
-    if (
-        player.x < targetX + targetSize &&
-        player.x + player.width > targetX &&
-        player.y < targetY + targetSize &&
-        player.y + player.height > targetY
-    ) {
-        targetX = Math.random() * (CANVAS_WIDTH - targetSize);
-        targetY = Math.random() * (CANVAS_HEIGHT - targetSize);
-        player.score += 1;
-        websocket.send(JSON.stringify({ type: 'updateScore', player: player }));
-    }
-}
-
-// KEEP PLAYER INSIDE CANVAS
-function keepPlayerInsideCanvas(player) {
-    if (player.x < 0) player.x = 0;
-    if (player.x + player.width > CANVAS_WIDTH) player.x = CANVAS_WIDTH - player.width;
-    if (player.y < 0) player.y = 0;
-    if (player.y + player.height > CANVAS_HEIGHT) player.y = CANVAS_HEIGHT - player.height;
-}
-
-// DRAW EVERYTHING
+// RITA BAKGRUND, MÅLET OCH POÄNG
 function draw() {
     context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
+    // BAKGRUNDSBILD
     if (backgroundImage.complete) {
         context.drawImage(backgroundImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
-    players.forEach(player => {
-        if (playerImage.complete) {
-            context.drawImage(playerImage, player.x, player.y, player.width, player.height);
-            context.fillStyle = 'black';
-            context.font = '16px Silkscreen, serif';
-            context.fillText('Score: ' + player.score, player.x, player.y - 10);
-        }
-    });
-
+    // MÅLBILD
     if (targetImage.complete) {
         context.drawImage(targetImage, targetX, targetY, targetSize, targetSize);
     }
+
+    // RITA POÄNG
+    context.fillStyle = 'black';
+    context.font = '20px Silkscreen, serif';
+    context.fillText('Score: ' + score, 10, 30);
 }
 
-// GAME LOOP
+// SPELLOOP
 function gameLoop() {
-    players.forEach(player => {
-        if (player.id === clientId) {
-            // Uppdatera den aktuella spelarens rörelse
-            movePlayer(player);  
-            checkCollision(player);
-            keepPlayerInsideCanvas(player);
-        }
-    });
-
     moveTarget();
     draw();
     requestAnimationFrame(gameLoop);
 }
 
-// START THE GAME
+// STARTA SPELET
 gameLoop();
+// --------------------
 
-// ----- CHAT FUNCTION ----- 
 
+// ------ EVENT LISTENERS ------
+
+// HERO-BANNER
+heroBanner.addEventListener("click", () => {
+    // DÖLJ HERO-BANNER
+    heroBanner.style.display = "none";
+
+    // VISA INNEHÅLL
+    mainContent.classList.remove("hidden");
+
+    // FOKUS PÅ ANVÄNDARENS INPUTFÄLT
+    userInput.focus();
+});
+
+// ANVÄNDARE
+userForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log("OK", userInput.value);
+
+    // NOT POSSIBLE TO CHANGE USERNAME
+    userInput.setAttribute("disabled", true);
+
+    // DÖLJ TITEL OCH BESKRIVNING
+    gameDescription.style.display = "none";
+    gameImage.style.display = "none";
+    gameDescriptionBox.style.display = "none";
+
+    // DÖLJ FORMULÄR FÖR ANVÄNDARE
+    userForm.style.display = "none";
+
+    // ÖPPNA CANVAS, TA BORT HIDDEN
+    gameCanvas.classList.remove("hidden");
+
+    // ÖPPNA CHAT, TA BORT HIDDEN
+    messageForm.classList.remove("hidden");
+    chat.classList.remove("hidden");
+
+    // VÄLJ VÄLKOMSTTEXT OCH VISA DEN
+    userNameElement.textContent = userInput.value;
+    welcomeText.classList.remove("hidden");
+
+    // AKTIVERA INMATNINGSFÄLT FÖR MEDDELANDEN
+    objChat.user = userInput.value;
+
+        // SKICKA AUTOMATISKT VÄLKOMSTMEDDELANDE
+        objChat.message = `${objChat.user} joined the game!`;
+        objChat.datetime = new Date().toLocaleTimeString();
+        renderChatMessage(objChat);
+        websocket.send(JSON.stringify(objChat));
+});
+
+messageForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    objChat.message = messageInput.value;
+    objChat.datetime = new Date().toLocaleTimeString();
+
+    // LÄMNA BLANK INPUT EFTER SÄNDNING
+    messageInput.value = "";
+
+    // FUNKTION FÖR UPPDATERING AV CHATT
+    renderChatMessage(objChat);
+
+    // SKICKA TILL SERVERN/WEBSOCKET
+    websocket.send(JSON.stringify(objChat));
+});
+
+websocket.addEventListener(`message`, (event) => {
+    console.log("Event", event);
+
+    // EVENT.DATA - DET OBJEKT SOM SKICKATS
+    const obj = JSON.parse(event.data);
+
+    renderChatMessage(obj);
+});
+
+
+// * ------------* 
+
+// ---- FUNKTIONER ----
+
+/**
+ *
+ * @param {object} obj
+ */
 function renderChatMessage(obj) {
-    if (obj.message && obj.user) {
-        const div = document.createElement("div");
-        const p = document.createElement("p");
-        p.textContent = obj.message;
+    // ser till att funktionen inte ritar något i chatten om objChat.message eller objChat.user saknar värde.
+    if (!obj.message || !obj.user) return;
 
-        const span = document.createElement("span");
-        span.textContent = obj.user + ' ' + obj.datetime;
+    const div = document.createElement("div");
+    const p = document.createElement("p");
+    p.textContent = obj.message;
 
-        div.appendChild(p);
-        div.appendChild(span);
-        chat.appendChild(div);
-    }
-}
+    const span = document.createElement("span");
+    span.textContent = `${obj.user} - ${obj.datetime}`;
+
+    div.appendChild(p);
+    div.appendChild(span);
+
+    chat.appendChild(div);
+
+    // AUTOSCROLL CHAT
+    chat.scrollTop = chat.scrollHeight;
+};
