@@ -7,19 +7,11 @@
     <title>SQUARE CHASE</title>
 
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/game.css">
+
 </head>
 
 <body>
-
-
-
-
-
-    <!-- KLICKBAR HERO-BANNER -->
-    <!-- <div id="heroBanner" class="hero-banner">
-        <a href="#" id="heroLink">
-        </a>
-    </div> -->
 
 
     <!-- TEST VIDEO-HEROBANNER -->
@@ -29,9 +21,9 @@
                 <source src="./videos/herovideo2.mov" type="video/mp4">
             </video>
 
+            <!-- TAGIT FRAM LOGGA MED HJÄLP AV AI -->
+            <!-- VIDEO TAGEN FRÅN https://elements.envato.com/ MED LICENS -->
             <div class="hero-image-wrapper">
-                <!-- LOGO -->
-                <!-- <img src="./images/logo3.png" alt="Loading Image" id="firstImage" class="hero-image"> -->
                 <img src="./images/logo4.png" alt="Start Game Image" id="startImage" class="hero-image">
             </div>
         </a>
@@ -40,27 +32,25 @@
 
     <div id="mainContent" class="hidden">
 
-        <!-- TEST VIDEO BAKGRUND -->
+        <!-- VIDEO BAKGRUND -->
         <video autoplay muted loop id="backgroundVideo">
             <source src="./videos/herovideo2.mov" type="video/mp4">
         </video>
 
+
         <div class="introduction">
             <img src="./images/logo3.png" alt="Game Image" id="gameImage" />
             <div id="gameDescriptionBox">
-                <h3 id="gameDescription">Move your square, chase the target, and outsmart other players in real time!
-                    Score
-                    points by reaching
-                    the
-                    target
-                    square first, but stay sharp – everyone else is after it too.
-
+                <h3 id="gameDescription">Move your target, chase the square, and outsmart other players in real time!
+                    Score points by reaching the targetsquare first, but stay sharp – everyone else is after it too.
+                    <br>
                     Chat with other players while you play and celebrate your victories.
                     <br><br>Ready to join the chaos? Let’s go!
                 </h3>
                 <img src="./images/arcade1.png" alt="Decorative Image 1" class="floating-image image1">
                 <img src="./images/arcade2.png" alt="Decorative Image 2" class="floating-image image2">
             </div>
+
 
             <!-- ANVÄNDARE MÅSTE FYLLA I NAMN FÖR ATT STARTA SPEL -->
             <form action="" id="userForm">
@@ -70,6 +60,7 @@
             </form>
 
 
+
             <!-- SPELET STARTAR -->
             <div id="welcomeText" class="hidden">
                 <h2>Welcome, <span id="userName"></span>!</h2>
@@ -77,18 +68,28 @@
                     points by reaching the target first and stay sharp — everyone else is after it too!</p>
             </div>
 
-            <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
-            <canvas id="gameCanvas" class="hidden">hejhej</canvas>
 
-            <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
-            <form action="" class="hidden chatbox" id="messageForm">
-                <label for="message">CHAT WITH YOUR OPPONENTS</label>
-                <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
-                <input type="submit" value="SEND">
-            </form>
 
-            <div id="chat" class="hidden">
-                <!-- <p> - LET'S GET STARTED</p> -->
+            <div class="game">
+                <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
+                <canvas id="gameCanvas" class="hidden"></canvas>
+                <div id="score">Poäng: 0</div>
+                <script src="scripts/game.js"></script>
+
+
+                <!-- GÖMT TILLS DESS ATT SPEL STARTAR -->
+                <div class="boxchat">
+                    <form action="" class="hidden chatbox" id="messageForm">
+                        <label for="message">CHAT WITH YOUR OPPONENTS</label>
+                        <input type="text" id="message" name="message" required placeholder="SAY SOMETHING">
+                        <input type="submit" value="SEND">
+                    </form>
+
+
+                    <div id="chat" class="hidden">
+                        <!-- <p> - LET'S GET STARTED</p> -->
+                    </div>
+                </div>
             </div>
 
 
@@ -97,6 +98,7 @@
 
 
     <script src="scripts/code.js"></script>
+
 </body>
 
 </html>
