@@ -136,6 +136,16 @@ body {
 
 
 /* ----- FONTS & RUBRIKER ----- */
+p {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 4px rgb(255, 255, 255);  
+}
+
 h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
@@ -156,9 +166,10 @@ h3 {
 }
 
 h2 {
-    font-size: 2rem;
-    /* margin-bottom: 20px; */
-    max-width: 900px;
+    font-size: 2.5rem;
+    padding: 0px;
+    margin-bottom: 20px;
+    margin-top:-30px;
     text-align: center;
     line-height: 1.6;
     font-family: "Silkscreen", serif;
