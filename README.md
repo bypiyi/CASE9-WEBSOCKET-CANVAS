@@ -1,13 +1,22 @@
 # SQUARE CHASE - Jaga fyrkanten!
 
-Installera projektet genom att köra följande kommado i terminalen:
+Jag skapade **Square Chase** för att kombinera spelutveckling och WebSocket-teknologi. Spelet är enkelt men utmanande och gör det möjligt för spelare att tävla om högsta poäng i realtid.
 
+
+# Installera projektet genom att köra följande kommado i terminalen:
+För att installera och köra spelet, följ dessa steg:
+
+# 1. Klona projektet
+```bash
+git clone https://github.com/ditt-github/användarnamn/square-chase.git
+```
+
+# 2. Installera beroenden:
 ```bash
 npm install
 ```
 
-Starta servern genom att köra följande kommado i terminalen:
-
+# 3. Starta servern genom att köra följande kommado i terminalen:
 ```bash
 npm run start
 ```
