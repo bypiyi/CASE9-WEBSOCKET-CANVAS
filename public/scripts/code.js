@@ -17,11 +17,11 @@ const userNameElement = document.querySelector("#userName");
 
 // * ------------------------ *
 
-
 const websocket = new WebSocket("ws://localhost:8082");
 
 // DEKLARERA OBJEKT - CHATTMEDDELANDE
 let objChat = {};
+let gameOver = false;
 
 // CANVAS
 const gameCanvas = document.querySelector("#gameCanvas");
@@ -37,8 +37,8 @@ gameCanvas.height = CANVAS_HEIGHT;
 let targetX = 400;
 let targetY = 400;
 const targetSize = 80;
-let targetSpeedX = 8;
-let targetSpeedY = 8;
+let targetSpeedX = 2;
+let targetSpeedY = 2;
 
 // POÄNGVARIABEL
 let score = 0;
@@ -51,11 +51,14 @@ const targetImage = new Image();
 targetImage.src = './images/target.png';
 
 // KONTROLLERA OM MÅLET ÄR KLICKAT
+// STOPPAR INTERAKTIONER OM SPELET ÄR SLUT
 gameCanvas.addEventListener("click", (e) => {
+    if (gameOver) return;
+
     const mouseX = e.offsetX;
     const mouseY = e.offsetY;
 
-    // KONTROLLERA OM SPELAREN HAR KLICKAT PÅ MÅLET
+    // OM MÅLET KLICKAS - 
     if (
         mouseX > targetX &&
         mouseX < targetX + targetSize &&
@@ -66,17 +69,16 @@ gameCanvas.addEventListener("click", (e) => {
         targetX = Math.random() * (CANVAS_WIDTH - targetSize);
         targetY = Math.random() * (CANVAS_HEIGHT - targetSize);
 
-        // ÖKA POÄNG OCH SKICKA TILL CHAT
+        // ÖKA POÄNG OCH MEDDELA I CHATT
         score += 1;
         objChat.message = `${objChat.user} scored! Total: ${score} points`;
         objChat.datetime = new Date().toLocaleTimeString();
         renderChatMessage(objChat);
 
-        // Skicka poäng till servern
+        // SKICKA POÄNG TILL SERVERN
         websocket.send(JSON.stringify(objChat));
     }
 });
-
 
 // FLYTTA MÅLET
 function moveTarget() {
@@ -114,9 +116,11 @@ function draw() {
 
 // SPELLOOP
 function gameLoop() {
-    moveTarget();
-    draw();
-    requestAnimationFrame(gameLoop);
+    if (!gameOver) {
+        moveTarget();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
 }
 
 // STARTA SPELET
@@ -168,11 +172,11 @@ userForm.addEventListener("submit", (e) => {
     // AKTIVERA INMATNINGSFÄLT FÖR MEDDELANDEN
     objChat.user = userInput.value;
 
-        // SKICKA AUTOMATISKT VÄLKOMSTMEDDELANDE
-        objChat.message = `${objChat.user} joined the game!`;
-        objChat.datetime = new Date().toLocaleTimeString();
-        renderChatMessage(objChat);
-        websocket.send(JSON.stringify(objChat));
+    // SKICKA AUTOMATISKT VÄLKOMSTMEDDELANDE
+    objChat.message = `${objChat.user} joined the game!`;
+    objChat.datetime = new Date().toLocaleTimeString();
+    renderChatMessage(objChat);
+    websocket.send(JSON.stringify(objChat));
 });
 
 messageForm.addEventListener("submit", (e) => {
@@ -196,9 +200,17 @@ websocket.addEventListener(`message`, (event) => {
     // EVENT.DATA - DET OBJEKT SOM SKICKATS
     const obj = JSON.parse(event.data);
 
+    if (obj.type === "gameOver") {
+        // NÄR SPELET ÄR ÖVER VISAS EN ALERT FÖR SAMTLIGA KLIENTER
+        gameOver = true;
+        alert(`${obj.user} WON THE GAME! GAME OVER!`);
+
+        // SPELET STARTAR OM
+        resetGame();
+    }
+
     renderChatMessage(obj);
 });
-
 
 // * ------------* 
 
@@ -227,3 +239,21 @@ function renderChatMessage(obj) {
     // AUTOSCROLL CHAT
     chat.scrollTop = chat.scrollHeight;
 };
+
+
+// FUNKTION FÖR ATT ÅTERSTÄLLA SPELET VID VINST
+function resetGame() {
+    // ÅTERSTÄLL SPELETS TILLSTÅND
+    score = 0;
+    targetX = 400;
+    targetY = 400;
+    targetSpeedX = 2;
+    targetSpeedY = 2;
+    
+    // DÖLJER SPELET OCH VISAR STARTSIDAN
+    gameCanvas.classList.add("hidden");
+    messageForm.classList.add("hidden");
+    chat.classList.add("hidden");
+    heroBanner.style.display = "block";
+    mainContent.classList.add("hidden");
+}
